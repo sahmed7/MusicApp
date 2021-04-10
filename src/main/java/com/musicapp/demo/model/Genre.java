@@ -1,8 +1,17 @@
 package com.musicapp.demo.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "genres")
 public class Genre {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String name;
+    @Column
     private String description;
 
     public Genre() {

@@ -1,10 +1,17 @@
 package com.musicapp.demo.model;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
+@Table(name = "songs")
 public class Song {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    @Column
     private String title;
+    @Column
     private Date year;
 
     public Song() {

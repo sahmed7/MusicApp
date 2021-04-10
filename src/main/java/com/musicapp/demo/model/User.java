@@ -1,27 +1,40 @@
 package com.musicapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
-    private Long Id;
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
     private String userName;
+    @Column
     private String emailAddress;
+    @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {
     }
 
     public User(Long id, String userName, String emailAddress, String password) {
-        Id = id;
+        this.id = id;
         this.userName = userName;
         this.emailAddress = emailAddress;
         this.password = password;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getUserName() {
@@ -51,7 +64,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
