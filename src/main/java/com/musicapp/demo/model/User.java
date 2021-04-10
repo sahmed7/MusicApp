@@ -1,4 +1,4 @@
 package com.musicapp.demo.model;
 
-public class Users {
+public class User {
 }
