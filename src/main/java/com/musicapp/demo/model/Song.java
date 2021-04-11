@@ -1,7 +1,12 @@
 package com.musicapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "songs")
 public class Song {
@@ -14,6 +19,27 @@ public class Song {
     @Column
     private Date year;
 
+    //------- Many to One connection to genre table
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    @JsonIgnore
+    private Genre genre;
+    //------- Many to one connection to artist table
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
+    @JsonIgnore
+    private Artist artist;
+    //---------Many to many connection to user table
+
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
     public Song() {
     }
 
@@ -21,6 +47,14 @@ public class Song {
         Id = id;
         this.title = title;
         this.year = year;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public Long getId() {

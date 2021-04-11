@@ -1,5 +1,7 @@
 package com.musicapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,32 @@ public class Profile {
     private String lastName;
     @Column
     private String description;
+
+    //--------------One to one connection to user
+    @JsonIgnore
+    @OneToOne(mappedBy = "profile")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    //--------------One to one connection to artist
+    @JsonIgnore
+    @OneToOne(mappedBy = "profile")
+    private Artist artist;
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Profile() {
     }

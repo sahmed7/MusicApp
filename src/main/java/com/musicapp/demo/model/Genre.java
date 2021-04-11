@@ -1,6 +1,11 @@
 package com.musicapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "genres")
@@ -14,6 +19,16 @@ public class Genre {
     @Column
     private String description;
 
+    //--------Many To One connection to user table
+    @JsonIgnore
+    @ManyToOne
+    private User user;
+
+    //--------One to Many connection to song
+    @OneToMany(mappedBy = "genre")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Song> songList;
+
     public Genre() {
     }
 
@@ -21,6 +36,22 @@ public class Genre {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public List<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(List<Song> songList) {
+        this.songList = songList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
