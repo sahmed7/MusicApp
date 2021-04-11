@@ -30,6 +30,13 @@ public class Song {
     @JsonIgnore
     private Artist artist;
     //---------Many to many connection to user table
+    @ManyToMany
+    @JoinTable(
+            name = "song_user",
+            joinColumns = @JoinColumn(name = "song_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<User> userSet;
+
 
 
     public Artist getArtist() {

@@ -34,6 +34,9 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Genre> genreList;
 
+    //------Many to many connection to song table
+    @ManyToMany(mappedBy = "userSet")
+    Set<Song> songSet;
 
     public List<Genre> getGenreList() {
         return genreList;
