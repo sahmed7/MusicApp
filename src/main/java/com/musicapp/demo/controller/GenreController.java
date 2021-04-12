@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class GenreController {
@@ -18,11 +20,16 @@ public class GenreController {
     @GetMapping("/hello")
     public String helloWorld(){return "Hello World";}
 
-//    @GetMapping("/genres")
-//    public Genre getGenre(@PathVariable Long genreId){
-//        System.out.println("testing getGenre method");
-//        return genreService.getGenre(genreId);
-//    }
+    @GetMapping("/genres")
+    public List<Genre> getGenres(){
+      return genreService.getGenres();
+    }
+
+    @GetMapping("/genres/{genreId}")
+    public Genre getGenre(@PathVariable Long genreId){
+        System.out.println("testing getGenre method");
+        return genreService.getGenre(genreId);
+    }
 
 
 
