@@ -34,6 +34,14 @@ public class Song {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> userSet;
 
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
+
     public Song() {
     }
 

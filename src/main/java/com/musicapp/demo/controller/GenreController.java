@@ -1,6 +1,7 @@
 package com.musicapp.demo.controller;
 
 import com.musicapp.demo.model.Genre;
+import com.musicapp.demo.model.Song;
 import com.musicapp.demo.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,10 @@ public class GenreController {
     public String deleteGenre(@PathVariable Long genreId){
         return genreService.deleteGenre(genreId);
     }
+
+//    @PostMapping("/genres/{genreId}/songs")
+//    public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
+//        return genreService.createGenreSong(genreId, songObject);
+//    }
 
 }
