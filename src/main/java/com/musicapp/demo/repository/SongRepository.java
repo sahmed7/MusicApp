@@ -10,11 +10,11 @@ import java.util.List;
 public interface SongRepository extends JpaRepository <Song, Long> {
 
 
-    //Song findByTitle(String songTitle);
+    Song findByTitle(String songTitle);
 
     //Song findByTitleAndUserIdAndIdIsNot(String songTitle,Long userId, Long songId);
 
-    //List<Song> findByGenreId(Long songId);
+    List<Song> findByGenreId(Long songId);
 
     //Song findByTitleAndUserId(String songTitle, Long userId);
 
