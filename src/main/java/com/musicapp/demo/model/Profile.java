@@ -27,19 +27,6 @@ public class Profile {
         return user;
     }
 
-    //--------------One to one connection to artist
-    @JsonIgnore
-    @OneToOne(mappedBy = "profile")
-    private Artist artist;
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }

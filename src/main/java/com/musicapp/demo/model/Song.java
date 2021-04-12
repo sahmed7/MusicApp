@@ -17,6 +17,8 @@ public class Song {
     @Column
     private String title;
     @Column
+    private String artistFullName;
+    @Column
     private Date year;
 
     //------- Many to One connection to genre table
@@ -24,11 +26,6 @@ public class Song {
     @JoinColumn(name = "genre_id")
     @JsonIgnore
     private Genre genre;
-    //------- Many to one connection to artist table
-    @ManyToOne
-    @JoinColumn(name = "artist_id")
-    @JsonIgnore
-    private Artist artist;
     //---------Many to many connection to user table
     @ManyToMany
     @JoinTable(
@@ -36,16 +33,6 @@ public class Song {
             joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> userSet;
-
-
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
-    }
 
     public Song() {
     }
@@ -95,5 +82,13 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", year=" + year +
                 '}';
+    }
+
+    public String getArtistFullName() {
+        return artistFullName;
+    }
+
+    public void setArtistFullName(String artistFullName) {
+        this.artistFullName = artistFullName;
     }
 }
