@@ -55,4 +55,19 @@ public class GenreService {
             return genreRepository.save(genreObject);
         }
     }
+
+    public Genre updateGenre(Long genreId, Genre genreObject){
+        System.out.println("service calling updateGenre");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+
+        if(genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not found");
+        }else{
+            genre.setName(genreObject.getName());
+            genre.setDescription(genreObject.getDescription());
+            genre.setUser(genreObject.getUser());
+            return genreRepository.save(genre);
+        }
+    }
 }
