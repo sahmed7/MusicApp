@@ -29,6 +29,7 @@ public class GenreController {
         return genreService.getGenre(genreId);
     }
 
+    //https://localhost:9093/api/genres
     @PostMapping("/genres")
     public Genre createGenre(@RequestBody Genre genreObject){
         System.out.println("Creating Genre");
