@@ -70,4 +70,16 @@ public class GenreService {
             return genreRepository.save(genre);
         }
     }
+
+    public String deleteGenre(Long genreId){
+        System.out.println("service callign deleteGenre");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        if(genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not found");
+        }else{
+            genreRepository.deleteById(genreId);
+            return "genre with id " + genreId + " has been successfully deleted";
+        }
+    }
 }

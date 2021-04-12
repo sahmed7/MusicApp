@@ -39,4 +39,9 @@ public class GenreController {
         return genreService.updateGenre(genreId, genreObject);
     }
 
+    @DeleteMapping("/genres/{genreId}")
+    public String deleteGenre(@PathVariable Long genreId){
+        return genreService.deleteGenre(genreId);
+    }
+
 }
