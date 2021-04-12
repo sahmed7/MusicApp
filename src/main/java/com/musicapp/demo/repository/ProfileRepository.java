@@ -1,4 +1,4 @@
 package com.musicapp.demo.repository;
 
-public interface UserProfileRepository {
+public interface ProfileRepository {
 }
