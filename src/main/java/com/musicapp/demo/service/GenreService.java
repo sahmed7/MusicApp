@@ -1,9 +1,11 @@
 package com.musicapp.demo.service;
 
+import com.musicapp.demo.exception.InformationExistException;
 import com.musicapp.demo.exception.InformationNotFoundException;
 import com.musicapp.demo.model.Genre;
 import com.musicapp.demo.repository.GenreRepository;
 import com.musicapp.demo.security.MyUserDetails;
+import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,18 @@ public class GenreService {
             throw new InformationNotFoundException("genre with id " + genreId + " not found");
         }else{
             return genre;
+        }
+    }
+
+    public Genre createGenre(Genre genreObject){
+        System.out.println("Service calling createGenre");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByUserIdAndName(userDetails.getUser().getId(), genreObject.getName());
+        if(genre != null){
+            throw new InformationExistException("genre with name " + genre.getName() + " already exist");
+        }else{
+            genreObject.setUser(userDetails.getUser());
+            return genreRepository.save(genreObject);
         }
     }
 }
