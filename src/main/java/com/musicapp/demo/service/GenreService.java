@@ -87,22 +87,25 @@ public class GenreService {
         }
     }
 
-    public Song createGenreSong(Long genreId, Song songObject){
-        System.out.println("service calling createGenreSong");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+//    public Song createGenreSong(Long genreId, Song songObject){
+//        System.out.println("service calling createGenreSong");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 //        if(genre == null){
 //            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
 //        }
-        Song song = songRepository.findByTitleAndUserId(songObject.getTitle(), userDetails.getUser().getId());
+//        //Song song = songRepository.findByTitleAndUserId(songObject.getTitle(), userDetails.getUser().getId());
 //        if(song != null){
-//            //throw new InformationExistException("song with title " + song.getTitle() + " already exists");
-//
+//            throw new InformationExistException("song with title " + song.getTitle() + " already exists");
 //        }
-//        songObject.setUserSet((Set<User>) userDetails.getUser().getId());
-//        System.out.println("the song id working");
-        return song;
-        // songObject.setUserSet(userDetails.);
-    }
+//        songObject.setUserSet((Set<User>) userDetails.getUser());
+//        songObject.setGenre(genre);
+//        //songObject.setTitle();
+//        return songRepository.save(songObject);
+//
+//        //title
+//        //artistfullname
+//        //year
+//    }
 
 }
