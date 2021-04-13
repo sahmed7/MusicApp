@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -76,7 +78,7 @@ public class GenreService {
     }
 
     public String deleteGenre(Long genreId){
-        System.out.println("service callign deleteGenre");
+        System.out.println("service calling deleteGenre");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         if(genre == null){
@@ -87,25 +89,41 @@ public class GenreService {
         }
     }
 
-//    public Song createGenreSong(Long genreId, Song songObject){
-//        System.out.println("service calling createGenreSong");
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+    public String createGenreSong(Long genreId, Map<String, String> songObject){
+        System.out.println("service calling createGenreSong");
+        //MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        System.out.println(songObject.get("title"));
+        System.out.println(songObject.get("artistFullName"));
+        System.out.println(songObject.get("year"));
+        System.out.println(songObject.get("userId"));
+
 //        if(genre == null){
 //            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
 //        }
-//        //Song song = songRepository.findByTitleAndUserId(songObject.getTitle(), userDetails.getUser().getId());
-//        if(song != null){
-//            throw new InformationExistException("song with title " + song.getTitle() + " already exists");
-//        }
-//        songObject.setUserSet((Set<User>) userDetails.getUser());
+        //Song song = songRepository.findByTitleAndUser(songObject.getTitle(), userDetails.getUser().getId());
+//        List<Song> userSongs = userDetails.getUser().getSongList();
+//        if(userSongs != null){
+////            userSongs.stream().forEach(sg -> {
+////                if(sg.getTitle().equals(songObject.getTitle())){
+////                    throw new InformationExistException("song with title " + sg.getTitle() + " already exists");
+////                }
+////            });
+//            }
+        //songObject.set
+//        List<User> updatingUser = new ArrayList();
+//        updatingUser.add(userDetails.getUser());
+//        songObject.setUserList(updatingUser);
 //        songObject.setGenre(genre);
-//        //songObject.setTitle();
+//        songObject.setTitle(songObject.getTitle());
+//        songObject.setYear(songObject.getYear());
+//        songObject.setArtistFullName(songObject.getArtistFullName());
+        return "Hello";
 //        return songRepository.save(songObject);
-//
-//        //title
-//        //artistfullname
-//        //year
-//    }
+
+        //title
+        //artist full name
+        //year
+    }
 
 }

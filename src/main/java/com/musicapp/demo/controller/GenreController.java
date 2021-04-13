@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -46,9 +47,9 @@ public class GenreController {
 //        return genreService.deleteGenre(genreId);
 //    }
 
-//    @PostMapping("/genres/{genreId}/songs")
-//    public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
-//        return genreService.createGenreSong(genreId, songObject);
-//    }
+    @PostMapping("/genres/{genreId}/songs")
+    public String createGenreSong(@PathVariable Long genreId, @RequestBody Map<String, String> songObject){
+        return genreService.createGenreSong(genreId, songObject);
+    }
 
 }
