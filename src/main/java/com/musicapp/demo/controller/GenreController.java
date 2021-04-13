@@ -46,9 +46,9 @@ public class GenreController {
         return genreService.deleteGenre(genreId);
     }
 
-//    @PostMapping("/genres/{genreId}/songs")
-//    public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
-//        return genreService.createGenreSong(genreId, songObject);
-//    }
+    @PostMapping("/genres/{genreId}/songs")
+    public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
+        return genreService.createGenreSong(genreId, songObject);
+    }
 
 }
