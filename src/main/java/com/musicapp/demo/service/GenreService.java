@@ -4,6 +4,7 @@ import com.musicapp.demo.exception.InformationExistException;
 import com.musicapp.demo.exception.InformationNotFoundException;
 import com.musicapp.demo.model.Genre;
 import com.musicapp.demo.model.Song;
+import com.musicapp.demo.model.User;
 import com.musicapp.demo.repository.GenreRepository;
 import com.musicapp.demo.repository.SongRepository;
 import com.musicapp.demo.security.MyUserDetails;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GenreService {
@@ -85,18 +87,25 @@ public class GenreService {
         }
     }
 
-    public Song createGenreSong(Long genreId, Song songObject){
-        System.out.println("service calling createGenreSong");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
-        if(genre == null){
-            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
-        }
-        Song song = songRepository.findByTitleAndUserId(songObject.getTitle(), userDetails.getUser().getId());
-        if(song != null){
-            throw new InformationExistException("song with title " + song.getTitle() + " already exists");
-        }
-        songObject.setUserSet(userDetails.);
-    }
+//    public Song createGenreSong(Long genreId, Song songObject){
+//        System.out.println("service calling createGenreSong");
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+//        if(genre == null){
+//            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+//        }
+//        //Song song = songRepository.findByTitleAndUserId(songObject.getTitle(), userDetails.getUser().getId());
+//        if(song != null){
+//            throw new InformationExistException("song with title " + song.getTitle() + " already exists");
+//        }
+//        songObject.setUserSet((Set<User>) userDetails.getUser());
+//        songObject.setGenre(genre);
+//        //songObject.setTitle();
+//        return songRepository.save(songObject);
+//
+//        //title
+//        //artistfullname
+//        //year
+//    }
 
 }

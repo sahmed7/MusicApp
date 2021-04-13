@@ -27,20 +27,16 @@ public class Song {
     @JsonIgnore
     private Genre genre;
     //---------Many to many connection to user table
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable(
             name = "song_user",
-            joinColumns = @JoinColumn(name = "song_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    Set<User> userSet;
-
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
+            joinColumns = {
+                    @JoinColumn(name = "song_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    List<User> userList;
 
     public Song() {
     }
@@ -98,5 +94,14 @@ public class Song {
 
     public void setArtistFullName(String artistFullName) {
         this.artistFullName = artistFullName;
+    }
+
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

@@ -35,8 +35,8 @@ public class User {
     private List<Genre> genreList;
 
     //------Many to many connection to song table
-    @ManyToMany(mappedBy = "userSet")
-    Set<Song> songSet;
+    @ManyToMany(mappedBy = "userList")
+    List<Song> songList;
 
     public List<Genre> getGenreList() {
         return genreList;
@@ -104,5 +104,13 @@ public class User {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public List<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(List<Song> songList) {
+        this.songList = songList;
     }
 }
