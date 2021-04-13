@@ -3,6 +3,7 @@ package com.musicapp.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,16 +28,21 @@ public class Song {
     @JsonIgnore
     private Genre genre;
     //---------Many to many connection to user table
-    @ManyToMany (cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "song_user",
-            joinColumns = {
-                    @JoinColumn(name = "song_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
-    List<User> userList;
+//    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinTable(
+//            name = "song_user",
+//            joinColumns = {
+//                    @JoinColumn(name = "song_id", referencedColumnName = "id",
+//                            nullable = false, updatable = false)},
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "user_id", referencedColumnName = "id",
+//                            nullable = false, updatable = false)})
+//    List<User> userList = new ArrayList<>();
+
+    //------Many to many connection to song table
+    @ManyToMany(mappedBy = "songList", fetch = FetchType.LAZY)
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    List<User> userList = new ArrayList<>();
 
     public Song() {
     }

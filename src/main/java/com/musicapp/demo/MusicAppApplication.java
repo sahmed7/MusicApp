@@ -37,12 +37,18 @@ public class MusicAppApplication implements CommandLineRunner {
         Song song1 = new Song(1L, "RockingSong1", new Date(year));
         Song song2 = new Song(2L, "RockingSong2", new Date(year));
         Song song3 = new Song(3L, "RockingSong3", new Date(year));
+//        songRepository.save(song1);
+//        songRepository.save(song2);
+        //songRepository.saveAll(Arrays.asList(song1, song2, song3));
+        //user1.setSongList(Arrays.asList(song1, song2, song3));
+        //user1.getSongList().addAll(Arrays.asList(song1, song2, song3));
+        //song1.setUserList(Arrays.asList(user1));
         songRepository.save(song1);
         songRepository.save(song2);
         songRepository.save(song3);
         user1.setSongList(Arrays.asList(song1, song2, song3));
-        //song1.setUserList(Arrays.asList(user1));
         userRepository.save(user1);
+
         System.out.println(user1.getSongList());
         System.out.println(user1.getSongList().get(1).getTitle());
     }

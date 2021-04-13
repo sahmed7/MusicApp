@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,9 +35,17 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Genre> genreList;
 
-    //------Many to many connection to song table
-    @ManyToMany(mappedBy = "userList")
-    List<Song> songList;
+    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "song_user",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "song_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    List<Song> songList = new ArrayList<>();
+
 
     public List<Genre> getGenreList() {
         return genreList;
