@@ -1,11 +1,12 @@
 package com.musicapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,10 +17,13 @@ public class User {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
     private String userName;
-    @Column
+
+    @Column (unique = true, nullable = false)
     private String emailAddress;
+
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -33,9 +37,11 @@ public class User {
     //------One to Many connection to genre table
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Genre> genreList;
 
-    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany (fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnore
     @JoinTable(
             name = "song_user",
             joinColumns = {
@@ -44,8 +50,7 @@ public class User {
             inverseJoinColumns = {
                     @JoinColumn(name = "song_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    List<Song> songList = new ArrayList<>();
-
+    Set<Song> songs = new HashSet<Song>();
 
     public List<Genre> getGenreList() {
         return genreList;
@@ -115,11 +120,21 @@ public class User {
                 '}';
     }
 
-    public List<Song> getSongList() {
-        return songList;
+    public Set<Song> getSongs(){
+        return songs;
     }
 
-    public void setSongList(List<Song> songList) {
-        this.songList = songList;
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
+
+    public void addSongs(Song song){
+        this.getSongs().add(song);
+        song.getUsers().add(this);
+    }
+
+    public void deleteSongs(Song song){
+        this.getSongs().remove(song);
+        song.getUsers().remove(this);
     }
 }
