@@ -7,26 +7,33 @@ import com.musicapp.demo.model.Song;
 import com.musicapp.demo.model.User;
 import com.musicapp.demo.repository.GenreRepository;
 import com.musicapp.demo.repository.SongRepository;
+import com.musicapp.demo.repository.UserRepository;
 import com.musicapp.demo.security.MyUserDetails;
 import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class GenreService {
     private GenreRepository genreRepository;
     private SongRepository songRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public void setGenreRepository(GenreRepository genreRepository){
         this.genreRepository = genreRepository;
     }
+
+    @Autowired
+    public void setSongRepository(SongRepository songRepository){
+        this.songRepository = songRepository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository){ this.userRepository = userRepository; }
 
     public List<Genre> getGenres(){
         System.out.println("service calling getGenres");
@@ -89,41 +96,73 @@ public class GenreService {
         }
     }
 
-    public String createGenreSong(Long genreId, Map<String, String> songObject){
+//    public String createGenreSong(Long genreId, Map<String, String> songObject){
+//        System.out.println("service calling createGenreSong");
+//        //MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        //Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+//        System.out.println(songObject.get("title"));
+//        System.out.println(songObject.get("artistFullName"));
+//        System.out.println(songObject.get("year"));
+//        System.out.println(songObject.get("userId"));
+//
+////        if(genre == null){
+////            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+////        }
+//        //Song song = songRepository.findByTitleAndUser(songObject.getTitle(), userDetails.getUser().getId());
+////        List<Song> userSongs = userDetails.getUser().getSongList();
+////        if(userSongs != null){
+//////            userSongs.stream().forEach(sg -> {
+//////                if(sg.getTitle().equals(songObject.getTitle())){
+//////                    throw new InformationExistException("song with title " + sg.getTitle() + " already exists");
+//////                }
+//////            });
+////            }
+//        //songObject.set
+////        List<User> updatingUser = new ArrayList();
+////        updatingUser.add(userDetails.getUser());
+////        songObject.setUserList(updatingUser);
+////        songObject.setGenre(genre);
+////        songObject.setTitle(songObject.getTitle());
+////        songObject.setYear(songObject.getYear());
+////        songObject.setArtistFullName(songObject.getArtistFullName());
+//        return "Hello";
+////        return songRepository.save(songObject);
+//
+//        //title
+//        //artist full name
+//        //year
+//    }
+
+    public Song createGenreSong(Long genreId, Song songObject){
         System.out.println("service calling createGenreSong");
-        //MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
-        System.out.println(songObject.get("title"));
-        System.out.println(songObject.get("artistFullName"));
-        System.out.println(songObject.get("year"));
-        System.out.println(songObject.get("userId"));
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 
-//        if(genre == null){
-//            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
-//        }
+        if(genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+        }
         //Song song = songRepository.findByTitleAndUser(songObject.getTitle(), userDetails.getUser().getId());
-//        List<Song> userSongs = userDetails.getUser().getSongList();
+        List<Song> userSongs = userDetails.getUser().getSongList();
 //        if(userSongs != null){
-////            userSongs.stream().forEach(sg -> {
-////                if(sg.getTitle().equals(songObject.getTitle())){
-////                    throw new InformationExistException("song with title " + sg.getTitle() + " already exists");
-////                }
-////            });
+//            userSongs.stream().forEach(sg -> {
+//                if(sg.getTitle().equals(songObject.getTitle())){
+//                    throw new InformationExistException("song with title " + sg.getTitle() + " already exists");
+//                }
+//            });
 //            }
-        //songObject.set
-//        List<User> updatingUser = new ArrayList();
-//        updatingUser.add(userDetails.getUser());
-//        songObject.setUserList(updatingUser);
-//        songObject.setGenre(genre);
-//        songObject.setTitle(songObject.getTitle());
-//        songObject.setYear(songObject.getYear());
-//        songObject.setArtistFullName(songObject.getArtistFullName());
-        return "Hello";
-//        return songRepository.save(songObject);
+        songObject.setGenre(genre);
+        System.out.println("Before setting songlist");
+        //System.out.println(userDetails.getUser().getSongList());
+        songRepository.save(songObject);
+        userDetails.getUser().setSongList(Arrays.asList(songObject));
+        System.out.println("After setting songlist");
+        System.out.println(userDetails.getUser().getSongList());
+        userRepository.save(userDetails.getUser());
+        System.out.println("After saving user");
+        System.out.println(userDetails.getUser().getSongList());
 
-        //title
-        //artist full name
-        //year
+        return songRepository.save(songObject);
+
     }
 
 }
