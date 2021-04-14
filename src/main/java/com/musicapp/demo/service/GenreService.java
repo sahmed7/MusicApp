@@ -9,11 +9,13 @@ import com.musicapp.demo.repository.GenreRepository;
 import com.musicapp.demo.repository.SongRepository;
 import com.musicapp.demo.repository.UserRepository;
 import com.musicapp.demo.security.MyUserDetails;
+import javassist.NotFoundException;
 import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -133,36 +135,38 @@ public class GenreService {
 //        //year
 //    }
 
-    public Song createGenreSong(Long genreId, Song songObject){
-        System.out.println("service calling createGenreSong");
+    public Song createGenreSong(Long genreId, Song songObject) {
+        System.out.println("Service calling createGenreSong");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
-
+        Song song = songRepository.findByTitle(songObject.getTitle());
         if(genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+        } else if(song != null){
+            throw new InformationExistException("song with title " + songObject.getTitle() + " already exists");
         }
-        //Song song = songRepository.findByTitleAndUser(songObject.getTitle(), userDetails.getUser().getId());
-        List<Song> userSongs = userDetails.getUser().getSongList();
-//        if(userSongs != null){
-//            userSongs.stream().forEach(sg -> {
-//                if(sg.getTitle().equals(songObject.getTitle())){
-//                    throw new InformationExistException("song with title " + sg.getTitle() + " already exists");
-//                }
-//            });
-//            }
         songObject.setGenre(genre);
-        System.out.println("Before setting songlist");
-        //System.out.println(userDetails.getUser().getSongList());
         songRepository.save(songObject);
-        userDetails.getUser().setSongList(Arrays.asList(songObject));
-        System.out.println("After setting songlist");
-        System.out.println(userDetails.getUser().getSongList());
-        userRepository.save(userDetails.getUser());
-        System.out.println("After saving user");
-        System.out.println(userDetails.getUser().getSongList());
-
         return songRepository.save(songObject);
+    }
 
+    public User addSongsToMyList(Long genreId, HashMap<String, ArrayList<Integer>> songs){
+        System.out.println("service calling addSongsToMyList");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ArrayList<Integer> songIds = songs.get("songs");
+
+        User user = userRepository.findById(userDetails.getUser().getId()).get();
+
+        if(songIds.isEmpty()) {
+            throw new InformationNotFoundException("No songs exist!");
+        }
+        for (int songId : songIds){
+            if(!songRepository.existsById((long) songId)) {
+                throw new InformationNotFoundException("Song " + songId + " not found!");
+            }
+            user.addSongs(songRepository.findById(songId));
+        }
+        return userRepository.save(user);
     }
 
 }

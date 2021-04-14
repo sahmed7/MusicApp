@@ -2,12 +2,14 @@ package com.musicapp.demo.controller;
 
 import com.musicapp.demo.model.Genre;
 import com.musicapp.demo.model.Song;
+import com.musicapp.demo.model.User;
 import com.musicapp.demo.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -47,14 +49,14 @@ public class GenreController {
 //        return genreService.deleteGenre(genreId);
 //    }
 
-//    @PostMapping("/genres/{genreId}/songs")
-//    public String createGenreSong(@PathVariable Long genreId, @RequestBody Map<String, String> songObject){
-//        return genreService.createGenreSong(genreId, songObject);
-//    }
-
     @PostMapping("/genres/{genreId}/songs")
     public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
         return genreService.createGenreSong(genreId, songObject);
+    }
+
+    @PutMapping("/genres/{genreId}/songsList")
+    public User addSongsToMyList(@PathVariable Long genreId, @RequestBody HashMap<String, ArrayList<Integer>> songs){
+        return genreService.addSongsToMyList(genreId, songs);
     }
 
 }

@@ -3,10 +3,7 @@ package com.musicapp.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "songs")
@@ -29,8 +26,9 @@ public class Song {
     private Genre genre;
 
     //------Many to many connection to song table
-    @ManyToMany(mappedBy = "songList", fetch = FetchType.LAZY)
-    List<User> userList = new ArrayList<>();
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnore
+    Set<User> users = new HashSet<User>();
 
     public Song() {
     }
@@ -91,11 +89,21 @@ public class Song {
     }
 
 
-    public List<User> getUserList() {
-        return userList;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void addUsers(User user) {
+        this.getUsers().add(user);
+        user.getSongs().add(this);
+    }
+
+    public void deleteUsers(User user) {
+        this.getUsers().remove(user);
+        user.getSongs().remove(this);
     }
 }

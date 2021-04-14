@@ -11,6 +11,8 @@ public interface SongRepository extends JpaRepository <Song, Long> {
 
 
     Song findByTitle(String songTitle);
+    Song findById(long songId);
+    //Boolean existFindByTitle(String songTitle);
 
     //Song findByTitleAndUserIdAndIdIsNot(String songTitle,Long userId, Long songId);
 
