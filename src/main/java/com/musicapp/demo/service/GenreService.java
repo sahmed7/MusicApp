@@ -190,4 +190,25 @@ public class GenreService {
         return songList;
     }
 
+    public Song updateGenreSong(Long genreId, Long songId, Song songObject){
+        System.out.println("service calling getGenreSongs");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userDetails.getUser().getId()).get();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Song> song = songRepository.findById(songId);
+        if(genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+        }else if(song.isEmpty()){
+            throw new InformationExistException("song with title " + songId + " doesn't exist");
+        }
+
+        song.get().setGenre(songObject.getGenre());
+        song.get().setTitle(songObject.getTitle());
+        song.get().setArtistFullName(songObject.getArtistFullName());
+        song.get().setYear(songObject.getYear());
+        songRepository.save(song.get());
+
+        return song.get();
+    }
+
 }
