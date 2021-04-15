@@ -5,6 +5,8 @@ import com.musicapp.demo.model.Song;
 import com.musicapp.demo.model.User;
 import com.musicapp.demo.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -63,6 +65,14 @@ public class GenreController {
     @GetMapping("/genres/{genreId}/songs")
     public List<Song> getGenreSongs(@PathVariable Long genreId){
         return genreService.getGenreSongs(genreId);
+    }
+
+    @DeleteMapping(path = "/genres/{genreId}/songs/{songId}")  //user is entering/passing the id anyway, use it
+    public ResponseEntity<HashMap> deleteGenreSong(@PathVariable Long genreId, @PathVariable Long songId) {
+        genreService.deleteGenreSong(genreId, songId);
+        HashMap responseMessage = new HashMap();
+        responseMessage.put("Status", "Song with id: "+ songId + " was successfully deleted!");
+        return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
     }
 
 }

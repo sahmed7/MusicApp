@@ -189,4 +189,24 @@ public class GenreService {
     }
 
 
+    public void deleteGenreSong(Long genreId, Long songId)  {
+        System.out.println("service calling deleteGenreSong ==>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        if (genre == null) {
+            throw new InformationNotFoundException("genre with id " + genreId +
+                    " not belongs to this user or genre does not exist");
+        }
+        Optional<Song> song = songRepository.findByGenreId(
+                genreId).stream().filter(p -> p.getId().equals(songId)).findFirst();
+        if (!song.isPresent()) {
+            throw new InformationNotFoundException("song with id " + songId +
+                    " not belongs to this user or song does not exist");
+        }
+        for(User user : song.get().getUsers()){
+            song.get().deleteUsers(user);
+            songRepository.deleteById(song.get().getId());
+        }
+    }
 }
