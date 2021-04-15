@@ -1,5 +1,6 @@
 package com.musicapp.demo.controller;
 
+import com.musicapp.demo.model.Song;
 import com.musicapp.demo.model.request.LoginRequest;
 import com.musicapp.demo.model.User;
 import com.musicapp.demo.model.request.LoginRequest;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping(path = "/auth/users")
@@ -45,4 +45,9 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
+    // http://localhost:9092/auth/users/changepassword
+    @PutMapping("/changepassword")
+    public User updatePassword(@RequestBody HashMap<String, String> passwordObj){
+        return userService.updatePassword(passwordObj);
+    }
 }

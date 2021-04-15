@@ -1,20 +1,27 @@
 package com.musicapp.demo.service;
 
 import com.musicapp.demo.exception.InformationExistException;
+import com.musicapp.demo.exception.InformationNotFoundException;
+import com.musicapp.demo.model.Genre;
 import com.musicapp.demo.model.User;
 import com.musicapp.demo.model.request.LoginRequest;
 import com.musicapp.demo.model.response.LoginResponse;
 import com.musicapp.demo.repository.ProfileRepository;
 import com.musicapp.demo.repository.UserRepository;
 import com.musicapp.demo.security.JWTUtils;
+import com.musicapp.demo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.HashMap;
 
 @Service
 public class UserService {
@@ -67,5 +74,27 @@ public class UserService {
     public User findUserByEmailAddress(String email) {
         return userRepository.findUserByEmailAddress(email);
     }
+
+
+
+    //Changing current user password
+    public User updatePassword(HashMap<String, String> passwordObj){
+        String password = passwordObj.get("password");
+
+        System.out.println("service calling updatePassword");
+        if(password.isEmpty()){
+            throw new InformationNotFoundException("Your password doesn't meet requirement. Password cannot be empty!");
+        }
+
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDetails.getUser();
+        currentUser.setPassword(passwordEncoder.encode(password));
+
+        return userRepository.save(currentUser);
+    }
 }
+
+
+
+
 
