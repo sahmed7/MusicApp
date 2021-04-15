@@ -90,7 +90,7 @@ public class GenreController {
         return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
     }
 
-    //http://localhost:9093/songs
+    //http://localhost:9093/api/songs
     @GetMapping("/songs")
     public List<Song> getAllSongs(){
         return genreService.getAllSongs();
