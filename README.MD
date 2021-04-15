@@ -16,7 +16,8 @@ Updated ERD diagram incorporating third table used for many to many connections 
 
 
 
-Endpoints open for Public and Private.
+Endpoints open for Public and Private access. First user "*/register" to create a user. Login to existing account to access
+"Private" endpoints. 
 
 POST == http://localhost:9093/auth/users/register  ==  Register a user           == PUBLIC
 POST == http://localhost:9093/auth/users/login     ==  Logs a user in            == PUBLIC
