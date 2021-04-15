@@ -8,7 +8,9 @@ Initial mock up:
 This was our initial ERD mock up of the MusicApp. It was going have 2 types of users that can have a profile. A regular user and an artist (of the song). The songs would be associated with a single genre. 
 ![initial_mockup.png](initial_mockup.png)
 
-Changed original ERD design. Dropped "artists" table. Connected "songs" table with "users" table using many to many connections.
+We ended up updating the original ERD design. We dropped "artists" table because having the artist table would mean the user would not be able to add a song to their playlist unless the Artist has created a profile and added their song into the database themselves. We did not want the user to not be able to add a song to their playlist just because the artist hasn't added the song yet. We felt this would discourage the user from using the app so we dropped it in favor of a straightforward personal playlist they have full control over.
+
+Connected "songs" table with "users" table using many to many connections.
 Updated ERD diagram incorporating third table used for many to many connections between "songs" and "users" table.
 
 
