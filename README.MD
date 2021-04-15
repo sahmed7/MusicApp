@@ -8,11 +8,15 @@ Initial mock up:
 This was our initial ERD mock up of the MusicApp. It was going have 2 types of users that can have a profile. A regular user and an artist (of the song). The songs would be associated with a single genre. 
 ![initial_mockup.png](initial_mockup.png)
 
-Changed original ERD design. Dropped Artist table. Connected "songs" table with "users" table using many to many connections. 
+Changed original ERD design. Dropped "artists" table. Connected "songs" table with "users" table using many to many connections.
 Updated ERD diagram incorporating third table used for many to many connections between "songs" and "users" table.
 
 
 ![img.png](img.png)
+
+
+
+Endpoints open for Public and Private.
 
 POST == http://localhost:9093/auth/users/register  ==  Register a user           == PUBLIC
 POST == http://localhost:9093/auth/users/login     ==  Logs a user in            == PUBLIC
