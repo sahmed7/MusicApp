@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -167,6 +168,16 @@ public class GenreService {
             user.addSongs(songRepository.findById(songId));
         }
         return userRepository.save(user);
+    }
+
+    public List<Song> getGenreSongs(Long genreId){
+        System.out.println("service calling getGenreSongs");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userDetails.getUser().getId()).get();
+        List<Song> songList = songRepository.findByGenreId(genreId)
+                .stream().filter(song -> song.getUsers().stream().findFirst().isPresent()).collect(Collectors.toList());
+
+        return songList;
     }
 
 }
