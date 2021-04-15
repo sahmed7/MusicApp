@@ -16,7 +16,17 @@ Updated ERD diagram incorporating third table used for many to many connections 
 
 ![img.png](img.png)
 
+GENERAL APPROACH: 
+1. We first approached the project with the thought of what kind of app can have categorized items relationship and thought of music/songs.
+2. Then we went straight to the ERD tool to hash out the entities involved, the relationships between those entities and the data they will house.
+3. We broke down the tasks by areas to tackle: models/entities, repositories, controllers/services
+4. We intended to get the basic CRUD operations going first and then incorporate the Security/JWT feature but figured to save ourselves refactoring later and just implemented it during the controller/service task
+5. With Security/JWT came user login and so we incorporated that in between with Bearer Tokens.
+6. Lastly, we circled back to all the Endpoints to ensure Exception Handling and then implemented User Profile capability 
+7. ReadMe was being updated along the way, until we faced a major hurdle (below) that halted the ReadMe until the end.
+
 **UNSOLVED PROBLEMS / MAJOR HURDLES:**
+
 There was one major hurdle that we faced. Populating a dynamically created JoinTable using Jpa annotations (instead of creating an Entity and Repository for itself) was working 90%. It was correctly associating the song with the user that created it but instead of INSERTing into the JoinTable one after another, it was replacing the existing row. We did plenty of research and attempted various possible adjustments and ideas but ultimately, nothing was working.
 
 After more research and consultation with a few colleagues, it was determined and concluded that we needed to refactor and implement another solution whilst keeping the JoinTable functionality since a many-to-many connection requires it so to maintain table integrity.
