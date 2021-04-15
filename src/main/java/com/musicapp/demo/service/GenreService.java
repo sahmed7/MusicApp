@@ -180,7 +180,6 @@ public class GenreService {
         song.get().setArtistFullName(songObject.getArtistFullName());
         song.get().setYear(songObject.getYear());
         songRepository.save(song.get());
-
         return song.get();
     }
 
@@ -203,6 +202,16 @@ public class GenreService {
             song.get().deleteUsers(user);
             songRepository.deleteById(song.get().getId());
         }
+    }
+
+    public List<Song> getAllSongs(){
+        System.out.println("Service calling getAllSongs");
+        List<Song> songList = songRepository.findAll();
+        if(songList.isEmpty()){
+            throw new InformationNotFoundException("there is no song to show");
+        }
+
+        return songList;
     }
 
 }
