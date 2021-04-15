@@ -105,33 +105,42 @@ public class GenreService {
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         Song song = songRepository.findByTitle(songObject.getTitle());
         if(genre == null){
-            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+            throw new InformationNotFoundException("You cannot create a song for this genre. Genre with id "
+                    + genreId + " does not belong to you or the genre doesn't exist");
         } else if(song != null){
-            throw new InformationExistException("song with title " + songObject.getTitle() + " already exists");
+            throw new InformationExistException("Song with title " + songObject.getTitle() + " already exists!");
         }
         songObject.setGenre(genre);
         songRepository.save(songObject);
         return songRepository.save(songObject);
     }
 
-    public User addSongsToMyList(Long genreId, HashMap<String, ArrayList<Integer>> songs){
+    public User addSongsToMyList(Long genreId, HashMap<String, ArrayList<Integer>> songs) {
         System.out.println("service calling addSongsToMyList");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         ArrayList<Integer> songIds = songs.get("songs");
 
         User user = userRepository.findById(userDetails.getUser().getId()).get();
 
-        if(songIds.isEmpty()) {
-            throw new InformationNotFoundException("No songs exist!");
+        if (genre == null) {
+            throw new InformationNotFoundException("Genre with genre id: "
+                    + genreId + " does not belong to you or the genre doesn't exist");
         }
-        for (int songId : songIds){
-            if(!songRepository.existsById((long) songId)) {
-                throw new InformationNotFoundException("Song " + songId + " not found!");
+            if (songIds.isEmpty()) {
+                throw new InformationNotFoundException("No songs exist!");
             }
-            user.addSongs(songRepository.findById(songId));
-        }
-        return userRepository.save(user);
+            for (int songId : songIds) {
+                if (!songRepository.existsById((long) songId)) {
+                    throw new InformationNotFoundException("Song " + songId + " not found!");
+                } else if (user.getSongs().contains(songRepository.findById(songId))) {
+                    throw new InformationExistException("Song " + songId + " already exists in your list!");
+                }
+                user.addSongs(songRepository.findById(songId));
+            }
+            return userRepository.save(user);
     }
+
 
     public List<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
@@ -140,7 +149,7 @@ public class GenreService {
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 
         if(genre == null){
-            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+            throw new InformationNotFoundException("Genre with id " + genreId + " not belongs to this user or genre doesn't exist");
         }
         List<Song> songList = songRepository.findByGenreId(genreId)
                 .stream().filter(song -> song.getUsers().stream().findFirst().isPresent()).collect(Collectors.toList());
@@ -158,12 +167,15 @@ public class GenreService {
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         Optional<Song> song = songRepository.findById(songId);
         if(genre == null){
-            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
-        }else if(song.isEmpty()){
-            throw new InformationExistException("song with title " + songId + " doesn't exist");
+            throw new InformationNotFoundException("Genre with id " + genreId + " not belongs to this user or genre doesn't exist");
         }
-
-        //song.get().setGenre(songObject.getGenre());
+        if(song.isEmpty()){
+            throw new InformationExistException("Song with id " + songId + " doesn't exist");
+        } else if(song.get().getTitle().equalsIgnoreCase(songObject.getTitle()) &&
+                song.get().getArtistFullName().equalsIgnoreCase(songObject.getArtistFullName()) &&
+                song.get().getYear().equals(songObject.getYear())) {
+            throw new InformationExistException("This song with title, artist, and year already exists! You must enter new information to update.");
+        }
         song.get().setTitle(songObject.getTitle());
         song.get().setArtistFullName(songObject.getArtistFullName());
         song.get().setYear(songObject.getYear());
