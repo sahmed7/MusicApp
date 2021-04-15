@@ -89,6 +89,8 @@ public class GenreController {
         responseMessage.put("Status", "Song with id: "+ songId + " was successfully deleted!");
         return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
     }
+
+    //http://localhost:9093/songs
     @GetMapping("/songs")
     public List<Song> getAllSongs(){
         return genreService.getAllSongs();

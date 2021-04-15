@@ -194,6 +194,7 @@ public class GenreService {
     }
 
     public List<Song> getAllSongs(){
+        System.out.println("Service calling getAllSongs");
         List<Song> songList = songRepository.findAll();
         if(songList.isEmpty()){
             throw new InformationNotFoundException("there is no song to show");
