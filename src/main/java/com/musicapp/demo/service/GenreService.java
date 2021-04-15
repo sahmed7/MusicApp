@@ -149,7 +149,7 @@ public class GenreService {
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 
         if(genre == null){
-            throw new InformationNotFoundException("Genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+            throw new InformationNotFoundException("Genre with id " + genreId + " does not belongs to you or genre does not exist");
         }
         List<Song> songList = songRepository.findByGenreId(genreId)
                 .stream().filter(song -> song.getUsers().stream().findFirst().isPresent()).collect(Collectors.toList());
