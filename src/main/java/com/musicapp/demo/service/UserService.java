@@ -78,7 +78,7 @@ public class UserService {
 
 
     //Changing current user password
-    public User updatePassword(HashMap<String, String> passwordObj){
+    public void updatePassword(HashMap<String, String> passwordObj){
         String password = passwordObj.get("password");
 
         System.out.println("service calling updatePassword");
@@ -90,7 +90,7 @@ public class UserService {
         User currentUser = userDetails.getUser();
         currentUser.setPassword(passwordEncoder.encode(password));
 
-        return userRepository.save(currentUser);
+        userRepository.save(currentUser);
     }
 }
 

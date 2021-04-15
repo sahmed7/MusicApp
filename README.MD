@@ -32,6 +32,8 @@ Create/Register a user (PUBLIC, POST) = http://localhost:{PORT-NUMBER}/auth/user
 
 Login User (PUBLIC, POST) = http://localhost:{PORT-NUMBER}/auth/users/login
 
+Update user password (PRIVATE, PUT) = http://localhost:{PORT-NUMBER}/auth/users/changepassword
+
 Create user profile (PRIVATE, POST) = http://localhost:{PORT-NUMBER}/api/profile
 
 Update user profile (PRIVATE, PUT) = http://localhost:{PORT-NUMBER}/api/profile
