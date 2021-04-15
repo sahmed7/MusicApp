@@ -19,17 +19,34 @@ Updated ERD diagram incorporating third table used for many to many connections 
 
 
 Endpoints open for Public and Private access. First user "*/register" to create a user. Login to existing account to access
-"Private" endpoints. 
+"Private" endpoints. Any spot in the endpoints referencing {genreId} or {songId}, the respective id must be supplied in order to perform said operation.
 
-POST == http://localhost:9093/auth/users/register  ==  Register a user           == PUBLIC
-POST == http://localhost:9093/auth/users/login     ==  Logs a user in            == PUBLIC
-GET  == http://localhost:9093/api/genres       ==  Lists all genres      == PRIVATE
-GET  == http://localhost:9093/api/genres/{id}     ==  Gets a single genre with the supplied id == PRIVATE
-POST == http://localhost:9093/api/genres  ==  Creates a new genre == PRIVATE
-PUT == http://localhost:9093/api/genres/{id}  ==  Updates a genre with the supplied id == PRIVATE
-DELETE == http://localhost:9093/api/genres/{id}  ==  Deletes a genre with the supplied id == PRIVATE
-POST == http://localhost:9093/api/genres/{id}/songs  ==  Creates a new song in the given genre == PRIVATE
-GET == http://localhost:9093/api/genres/{id}/songs  ==  List all songs in the given genre == PRIVATE
-PUT == http://localhost:9093/api/genres/{id}/songs/{id}  ==  Updates a song in the given genre == PRIVATE
-DELETE == http://localhost:9093/api/genres/{id}/songs/{id}  ==  Deletes a song in the given genre == PRIVATE
+Create/Register a user (PUBLIC, POST) = http://localhost:9093/auth/users/register
 
+Login User (PUBLIC, POST) = http://localhost:9093/auth/users/login
+
+Create user profile (PRIVATE, POST) = http://localhost:9093/api/profile
+
+Update user profile (PRIVATE, PUT) = http://localhost:9093/api/profile
+
+Create a genre (PRIVATE, POST) = http://localhost:9093/api/genres
+
+Read (get) all genres (PRIVATE, GET) = http://localhost:9093/api/genres
+
+Read (get) single genre (PRIVATE, GET) = http://localhost:9093/api/genres/{genreId}
+
+Update a genre (PRIVATE, PUT) = http://localhost:9093/api/genres/{genreId}
+
+Delete a genre (PRIVATE, DEL) = http://localhost:9093/api/genres/{genreId}
+
+Create a song (PRIVATE, POST) = http://localhost:9093/api/genres/{genreId}/songs
+
+Read (get) all songs (PRIVATE, GET) = http://localhost:9093/songs
+
+Read (get) all user's songs (PRIVATE, GET) = http://localhost:9093/api/genres/{genreId}/songs
+
+Update user song (PRIVATE, PUT) = http://localhost:9093/api/genres/{genreId}/songs/{songId}
+
+Delete user song (PRIVATE, DEL) = http://localhost:9093/api/genres/{genreId}/songs/{songId}
+
+Add songs to user playlist (PRIVATE, PUT) = http://localhost:9093/api/genres/{genreId}/songsList
