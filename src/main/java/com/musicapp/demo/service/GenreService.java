@@ -174,8 +174,18 @@ public class GenreService {
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(userDetails.getUser().getId()).get();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+
+        if(genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
+        }
+
         List<Song> songList = songRepository.findByGenreId(genreId)
                 .stream().filter(song -> song.getUsers().stream().findFirst().isPresent()).collect(Collectors.toList());
+
+        if(songList.isEmpty()){
+            throw new InformationExistException("Genre or user doesnt have any song");
+        }
 
         return songList;
     }

@@ -66,4 +66,6 @@ public class GenreController {
         return genreService.getGenreSongs(genreId);
     }
 
+//    @PutMapping("/genres/{genreId}/songs/{songId}")
+//    public Song updtateGenreS
 }
