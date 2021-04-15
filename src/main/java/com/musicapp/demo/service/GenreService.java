@@ -160,7 +160,7 @@ public class GenreService {
         if(genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre doesn't exist");
         }else if(song.isEmpty()){
-            throw new InformationExistException("song with title " + songId + " doesn't exist");
+            throw new InformationNotFoundException("song with title " + songId + " doesn't exist");
         }
 
         //song.get().setGenre(songObject.getGenre());
@@ -191,6 +191,15 @@ public class GenreService {
             song.get().deleteUsers(user);
             songRepository.deleteById(song.get().getId());
         }
+    }
+
+    public List<Song> getAllSongs(){
+        List<Song> songList = songRepository.findAll();
+        if(songList.isEmpty()){
+            throw new InformationNotFoundException("there is no song to show");
+        }
+
+        return songList;
     }
 
 }
