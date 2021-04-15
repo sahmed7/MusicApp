@@ -30,7 +30,7 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public String createUserProfile(Profile profileObject) {
+    public String createProfile(Profile profileObject) {
         System.out.println("service calling createUserProfile ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -56,7 +56,7 @@ public class ProfileService {
             profileRepository.save(profile);
             return profile;
         } else {
-            throw new InformationExistException("user profile is not exist for current user");
+            throw new InformationExistException("user profile does not exist for current user");
         }
     }
 }
