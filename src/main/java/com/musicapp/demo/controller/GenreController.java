@@ -67,6 +67,11 @@ public class GenreController {
         return genreService.getGenreSongs(genreId);
     }
 
+    @PutMapping("/genres/{genreId}/songs/{songId}")
+    public Song updateGenreSong(@PathVariable Long genreId, @PathVariable Long songId, @RequestBody Song songObject){
+        return genreService.updateGenreSong(genreId, songId, songObject);
+    }
+
     @DeleteMapping(path = "/genres/{genreId}/songs/{songId}")  //user is entering/passing the id anyway, use it
     public ResponseEntity<HashMap> deleteGenreSong(@PathVariable Long genreId, @PathVariable Long songId) {
         genreService.deleteGenreSong(genreId, songId);
