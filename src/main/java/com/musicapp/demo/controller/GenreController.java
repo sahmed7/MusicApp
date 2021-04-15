@@ -61,7 +61,7 @@ public class GenreController {
         return genreService.addSongsToMyList(genreId, songs);
     }
 
-    @GetMapping("/genres/{id}/songs")
+    @GetMapping("/genres/{genreId}/songs")
     public List<Song> getGenreSongs(@PathVariable Long genreId){
         return genreService.getGenreSongs(genreId);
     }
