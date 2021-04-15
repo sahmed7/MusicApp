@@ -51,7 +51,6 @@ public class GenreController {
 //    }
 
     @PostMapping("/genres/{genreId}/songs")
-
     public Song createGenreSong(@PathVariable Long genreId, @RequestBody Song songObject){
         return genreService.createGenreSong(genreId, songObject);
     }
@@ -61,11 +60,9 @@ public class GenreController {
         return genreService.addSongsToMyList(genreId, songs);
     }
 
-    @GetMapping("/genres/{id}/songs")
+    @GetMapping("/genres/{genreId}/songs")
     public List<Song> getGenreSongs(@PathVariable Long genreId){
         return genreService.getGenreSongs(genreId);
     }
 
-//    @PutMapping("/genres/{genreId}/songs/{songId}")
-//    public Song updtateGenreS
 }
