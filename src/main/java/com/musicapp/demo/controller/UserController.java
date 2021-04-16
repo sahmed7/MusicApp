@@ -33,9 +33,12 @@ public class UserController {
 
     // http://localhost:9093/auth/users/register
     @PostMapping("/register")
-    public User createUser(@RequestBody User userObject){
+    public ResponseEntity<HashMap> createUser(@RequestBody User userObject){
         System.out.println("Calling createUser ==>");
-        return userService.createUser(userObject);
+        userService.createUser(userObject);
+        HashMap responseMessage = new HashMap();
+        responseMessage.put("Status", "User was successfully created!");
+        return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
     }
 
     // http://localhost:9093/auth/users/login
