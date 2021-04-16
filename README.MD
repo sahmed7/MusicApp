@@ -73,6 +73,8 @@ The song must be created by the user first (creation and association) and then t
 
 This proved to be successful and also allowed us to retrieve the data from the JoinTable better than before.
 
+Another problem faced during project development was getting database error "FATAL: Too many clients already". To overcome this problem we had to reset postgre service and update developer environment properties.  
+
 **ENDPOINTS:** Endpoints open for Public and Private access. First user "*/register" to create a user. Login to existing account to access
 "Private" endpoints. Any spot in the endpoints referencing {genreId} or {songId}, the respective id must be supplied in order to perform said operation.
 
