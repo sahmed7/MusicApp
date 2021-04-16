@@ -38,6 +38,7 @@ public class GenreService {
     @Autowired
     public void setUserRepository(UserRepository userRepository){ this.userRepository = userRepository; }
 
+    //Getting list of genres of current user
     public List<Genre> getGenres(){
         System.out.println("service calling getGenres");
         MyUserDetails userDetails = gettingUserDetails();
@@ -49,6 +50,7 @@ public class GenreService {
         }
     }
 
+    //Getting single genres with given Id of current user
     public Genre getGenre(Long genreId){
         System.out.println("service calling getGenre");
         MyUserDetails userDetails = gettingUserDetails();
@@ -60,6 +62,7 @@ public class GenreService {
         }
     }
 
+    //Creating a new genre
     public Genre createGenre(Genre genreObject){
         System.out.println("Service calling createGenre");
         MyUserDetails userDetails = gettingUserDetails();
@@ -72,6 +75,7 @@ public class GenreService {
         }
     }
 
+    //Updating existing genre
     public Genre updateGenre(Long genreId, Genre genreObject){
         System.out.println("service calling updateGenre");
         MyUserDetails userDetails = gettingUserDetails();
@@ -86,6 +90,7 @@ public class GenreService {
         }
     }
 
+    //Deleting a genre belong to current user
     public String deleteGenre(Long genreId){
         System.out.println("service calling deleteGenre");
         MyUserDetails userDetails = gettingUserDetails();
@@ -98,7 +103,7 @@ public class GenreService {
         }
     }
 
-
+    //Creating a song of a given genre
     public Song createGenreSong(Long genreId, Song songObject) {
         System.out.println("Service calling createGenreSong");
         MyUserDetails userDetails = gettingUserDetails();
@@ -115,6 +120,7 @@ public class GenreService {
         return songRepository.save(songObject);
     }
 
+    //Associating a list of songs to a user
     public User addSongsToMyList(Long genreId, HashMap<String, ArrayList<Integer>> songs) {
         System.out.println("service calling addSongsToMyList");
         MyUserDetails userDetails = gettingUserDetails();
@@ -141,7 +147,7 @@ public class GenreService {
             return userRepository.save(user);
     }
 
-
+    //Getting all songs belonging to a given genre and current user
     public List<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = gettingUserDetails();
@@ -160,6 +166,7 @@ public class GenreService {
         return songList;
     }
 
+    //Updating song belonging a given genre and current user
     public Song updateGenreSong(Long genreId, Long songId, Song songObject){
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = gettingUserDetails();
@@ -183,6 +190,7 @@ public class GenreService {
         return song.get();
     }
 
+    //Deleting a song belonging to a given genre and current user
     public void deleteGenreSong(Long genreId, Long songId)  {
         System.out.println("service calling deleteGenreSong ==>");
         MyUserDetails userDetails = gettingUserDetails();
@@ -203,6 +211,7 @@ public class GenreService {
         }
     }
 
+    //Get all the songs in every genre
     public List<Song> getAllSongs(){
         System.out.println("Service calling getAllSongs");
         List<Song> songList = songRepository.findAll();
