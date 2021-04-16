@@ -1,4 +1,28 @@
-MUSICAPP README FILE
+MusicApp README FILE
+
+Machineries and Dependencies Installation:
+
+1. IntelliJ - IDE on PC used to develop project
+2. PostgresSQL/pgAdmin4 - software used to set up server and database
+3. Postman - software used to create an API environment to send and receive http requests at specific endpoints (main interface used to run program)
+4. CLI - Command-Line-Interface used in conjunction with Git to manage project repo and files from local machine to GitHub repo
+5. Pom.xml file within a Spring app requires a handful of dependencies to be installed:
+   
+GroupId: org.springframework.boot
+   
+ArtifactIds: spring-boot-starter, spring-boot-starter-test, spring-boot-starter-web (verion 2.4.4), spring-boot-starter-data-jpa, spring-boot-starter-security
+   
+GroupId: org.postgresql
+
+ArtifactId: postgresql
+
+GroupId: io.jsonwebtoken
+
+ArtifactId: jjwt
+
+Version: 0.9.1
+
+Each groupId and ArtifactId should be enclosed in <> brackets and the entire pair should be enclosed in < Dependency > bracket tags
 
 **Project Goal:** A music app that allows users to create genre-specific list of their favorite songs and be able to save it in their user profile.
 
@@ -16,7 +40,7 @@ Updated ERD diagram incorporating third table used for many to many connections 
 
 ![img.png](img.png)
 
-GENERAL APPROACH: 
+**GENERAL APPROACH + DELIVERABLE BREAKDOWN/TRACKING:** 
 1. We first approached the project with the thought of what kind of app can have categorized items relationship and thought of music/songs.
 2. Then we went straight to the ERD tool to hash out the entities involved, the relationships between those entities and the data they will house.
 3. We broke down the tasks by areas to tackle: models/entities, repositories, controllers/services
@@ -24,6 +48,20 @@ GENERAL APPROACH:
 5. With Security/JWT came user login and so we incorporated that in between with Bearer Tokens.
 6. Lastly, we circled back to all the Endpoints to ensure Exception Handling and then implemented User Profile capability 
 7. ReadMe was being updated along the way, until we faced a major hurdle (below) that halted the ReadMe until the end.
+
+![Endpoint Progress1.png](Endpoint Progress1.png)
+We kept track of endpoint method calls like this and checking off when each one gets completed.
+At end of day, we update that list with status and current place.
+
+![Endpoint Progress 2.png](Endpoint Progress 2.png)
+The multiple checks represents iterations. 
+
+First iteration, we tested the method in Postman right after each one is implemented.
+
+Second iteration, we tested each method as a use-case as if a user were to do it from beginning to end.
+
+Third iteration, we ran through each one ensuring exception handling at each endpoint.
+
 
 **UNSOLVED PROBLEMS / MAJOR HURDLES:**
 
