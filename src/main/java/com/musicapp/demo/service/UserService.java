@@ -51,11 +51,11 @@ public class UserService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    public User createUser(User userObject) {
+    public void createUser(User userObject) {
         System.out.println("service calling createUser ==>");
         if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
-            return userRepository.save(userObject);
+            userRepository.save(userObject);
         } else {
             throw new InformationExistException("User with email address " + userObject.getEmailAddress() +
                     " already exists!");
