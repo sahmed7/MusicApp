@@ -21,9 +21,6 @@ public class GenreController {
     @Autowired
     public void setGenreService(GenreService genreService){this.genreService = genreService;}
 
-    @GetMapping("/hello")
-    public String helloWorld(){return "Hello World";}
-
     //http://localhost:9093/api/genres
     @GetMapping("/genres")
     public List<Genre> getGenres(){
