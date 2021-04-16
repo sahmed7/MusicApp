@@ -142,7 +142,7 @@ public class GenreService {
     }
 
 
-    public List<Song> getGenreSongs(Long genreId){
+    public Set<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(userDetails.getUser().getId()).get();
@@ -157,7 +157,8 @@ public class GenreService {
         if(songList.isEmpty()){
             throw new InformationExistException("Genre or user doesnt have any song");
         }
-        return songList;
+        //return songList;
+        return user.getSongs();
     }
 
     public Song updateGenreSong(Long genreId, Long songId, Song songObject){
