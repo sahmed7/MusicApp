@@ -147,6 +147,7 @@ public class GenreService {
             return userRepository.save(user);
     }
 
+    //Get all the songs of current genre and user
     public Set<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = gettingUserDetails();
