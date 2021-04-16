@@ -49,11 +49,11 @@ Updated ERD diagram incorporating third table used for many to many connections 
 6. Lastly, we circled back to all the Endpoints to ensure Exception Handling and then implemented User Profile capability 
 7. ReadMe was being updated along the way, until we faced a major hurdle (below) that halted the ReadMe until the end.
 
-![Endpoint Progress1.png](Endpoint Progress1.png)
+![EndpointProgress1.png](EndpointProgress1.png)
 We kept track of endpoint method calls like this and checking off when each one gets completed.
 At end of day, we update that list with status and current place.
 
-![Endpoint Progress 2.png](Endpoint Progress 2.png)
+![EndpointProgress2.png](EndpointProgress2.png)
 The multiple checks represents iterations. 
 
 First iteration, we tested the method in Postman right after each one is implemented.
