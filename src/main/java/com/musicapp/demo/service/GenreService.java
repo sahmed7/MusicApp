@@ -212,7 +212,7 @@ public class GenreService {
 
         return songList;
     }
-
+    // Helper method getting userDetails
     public MyUserDetails gettingUserDetails(){
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder
                 .getContext()
