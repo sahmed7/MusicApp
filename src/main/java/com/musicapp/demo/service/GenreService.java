@@ -40,7 +40,7 @@ public class GenreService {
 
     public List<Genre> getGenres(){
         System.out.println("service calling getGenres");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         List<Genre> genres = genreRepository.findByUserId(userDetails.getUser().getId());
         if(genres.isEmpty()){
             throw new InformationNotFoundException("No genres found for that user id " + userDetails.getUser().getId());
@@ -51,7 +51,7 @@ public class GenreService {
 
     public Genre getGenre(Long genreId){
         System.out.println("service calling getGenre");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         if(genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not found");
@@ -62,7 +62,7 @@ public class GenreService {
 
     public Genre createGenre(Genre genreObject){
         System.out.println("Service calling createGenre");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByUserIdAndName(userDetails.getUser().getId(), genreObject.getName());
         if(genre != null){
             throw new InformationExistException("genre with name " + genre.getName() + " already exist");
@@ -74,7 +74,7 @@ public class GenreService {
 
     public Genre updateGenre(Long genreId, Genre genreObject){
         System.out.println("service calling updateGenre");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 
         if(genre == null){
@@ -88,7 +88,7 @@ public class GenreService {
 
     public String deleteGenre(Long genreId){
         System.out.println("service calling deleteGenre");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         if(genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not found");
@@ -101,7 +101,7 @@ public class GenreService {
 
     public Song createGenreSong(Long genreId, Song songObject) {
         System.out.println("Service calling createGenreSong");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         Song song = songRepository.findByTitle(songObject.getTitle());
         if(genre == null){
@@ -117,7 +117,7 @@ public class GenreService {
 
     public User addSongsToMyList(Long genreId, HashMap<String, ArrayList<Integer>> songs) {
         System.out.println("service calling addSongsToMyList");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         ArrayList<Integer> songIds = songs.get("songs");
 
@@ -144,7 +144,7 @@ public class GenreService {
 
     public List<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         User user = userRepository.findById(userDetails.getUser().getId()).get();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
 
@@ -162,7 +162,7 @@ public class GenreService {
 
     public Song updateGenreSong(Long genreId, Long songId, Song songObject){
         System.out.println("service calling getGenreSongs");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         User user = userRepository.findById(userDetails.getUser().getId()).get();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         Optional<Song> song = songRepository.findById(songId);
@@ -185,8 +185,7 @@ public class GenreService {
 
     public void deleteGenreSong(Long genreId, Long songId)  {
         System.out.println("service calling deleteGenreSong ==>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+        MyUserDetails userDetails = gettingUserDetails();
         Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
         if (genre == null) {
             throw new InformationNotFoundException("genre with id " + genreId +
@@ -212,6 +211,14 @@ public class GenreService {
         }
 
         return songList;
+    }
+
+    public MyUserDetails gettingUserDetails(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return userDetails;
     }
 
 }
