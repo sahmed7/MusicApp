@@ -3,7 +3,6 @@ package com.musicapp.demo.controller;
 import com.musicapp.demo.model.Song;
 import com.musicapp.demo.model.request.LoginRequest;
 import com.musicapp.demo.model.User;
-import com.musicapp.demo.model.request.LoginRequest;
 import com.musicapp.demo.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
