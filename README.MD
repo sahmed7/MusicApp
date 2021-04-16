@@ -18,9 +18,6 @@ ArtifactId: postgresql
 
 GroupId: io.jsonwebtoken
 
-ArtifactId: jjwt
-
-Version: 0.9.1
 
 Each groupId and ArtifactId should be enclosed in <> brackets and the entire pair should be enclosed in < Dependency > bracket tags
 
@@ -50,10 +47,12 @@ Updated ERD diagram incorporating third table used for many to many connections 
 7. ReadMe was being updated along the way, until we faced a major hurdle (below) that halted the ReadMe until the end.
 
 ![EndpointProgress1.png](EndpointProgress1.png)
+
 We kept track of endpoint method calls like this and checking off when each one gets completed.
 At end of day, we update that list with status and current place.
 
 ![EndpointProgress2.png](EndpointProgress2.png)
+
 The multiple checks represents iterations. 
 
 First iteration, we tested the method in Postman right after each one is implemented.
