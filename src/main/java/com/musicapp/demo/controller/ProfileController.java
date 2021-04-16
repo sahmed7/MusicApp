@@ -30,8 +30,11 @@ public class ProfileController {
     }
 
     @PutMapping("/profile")
-    public Profile updateProfile(@RequestBody Profile userProfileObject) {
+    public ResponseEntity<HashMap> updateProfile(@RequestBody Profile userProfileObject) {
         System.out.println("calling updateUserProfile ==>");
-        return profileService.updateProfile(userProfileObject);
+        profileService.updateProfile(userProfileObject);
+        HashMap responseMessage = new HashMap();
+        responseMessage.put("Status", "Profile was successfully updated!");
+        return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
     }
 }

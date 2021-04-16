@@ -42,7 +42,7 @@ public class ProfileService {
         return "profile created successfully";
     }
 
-    public Profile updateProfile(Profile profileObject) {
+    public void updateProfile(Profile profileObject) {
         System.out.println("service calling updateUserProfile ==>");
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -54,7 +54,7 @@ public class ProfileService {
             profile.setDescription(profileObject.getDescription());
             currentUser.get().setProfile(profile);
             profileRepository.save(profile);
-            return profile;
+            //return profile;
         } else {
             throw new InformationExistException("user profile does not exist for current user");
         }
