@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -67,7 +68,7 @@ public class GenreController {
 
     //http://localhost:9093/api/genres/4/songs
     @GetMapping("/genres/{genreId}/songs")
-    public List<Song> getGenreSongs(@PathVariable Long genreId){
+    public Set<Song> getGenreSongs(@PathVariable Long genreId){
         return genreService.getGenreSongs(genreId);
     }
 

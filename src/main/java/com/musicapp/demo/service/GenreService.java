@@ -147,8 +147,7 @@ public class GenreService {
             return userRepository.save(user);
     }
 
-    //Getting all songs belonging to a given genre and current user
-    public List<Song> getGenreSongs(Long genreId){
+    public Set<Song> getGenreSongs(Long genreId){
         System.out.println("service calling getGenreSongs");
         MyUserDetails userDetails = gettingUserDetails();
         User user = userRepository.findById(userDetails.getUser().getId()).get();
@@ -163,7 +162,8 @@ public class GenreService {
         if(songList.isEmpty()){
             throw new InformationExistException("Genre or user doesnt have any song");
         }
-        return songList;
+        //return songList;
+        return user.getSongs();
     }
 
     //Updating song belonging a given genre and current user
