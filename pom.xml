@@ -14,7 +14,7 @@
     <name>musicApp</name>
     <description>Unit 2 SpringBoot Project</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -70,6 +70,15 @@
 
 
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
