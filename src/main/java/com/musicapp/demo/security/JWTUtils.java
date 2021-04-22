@@ -3,6 +3,7 @@ package com.musicapp.demo.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,9 @@ import java.util.function.Function;
 
 @Service
 public class JWTUtils {
-    String SECRET_KEY = "TestKey"; //Secret key to make token
-
+    //Secret key to make token
+    @Value("${jwt.secret}")
+    String SECRET_KEY;
     //Token Generation staring
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
