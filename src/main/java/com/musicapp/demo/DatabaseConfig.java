@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import javax.sql.DataSource;
 // configuration bean heroku
+
 public class DatabaseConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
